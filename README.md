@@ -1091,6 +1091,24 @@ togglePlay:OnChanged(function(play)
 	end
 end)
 
+
+
+
+local Slider = Full_Auto_Play:AddSlider("Placement Size", {
+	Title = "Placement Size",
+	Description = "Select Placement Size For PlaceTower",
+	Default = _G.Size or 0,
+	Min = 0,
+	Max = 15,
+	Rounding = 0,
+	Callback = function(Value)
+		_G.Size = Value
+		saveSettings()
+		gen_size()
+	end
+})
+
+
 local Select_Speed = Ingame:AddDropdown("Select Speed", {
 	Title = "Select Speed",
 	Values = {1 ,2 ,3 ,5},

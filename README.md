@@ -405,7 +405,7 @@ end
 
 local Update_Quest = function()
 	local a = {}
-	
+
 	for i,v in pairs(game:GetService("ReplicatedStorage").Shared.Data.Quests:GetChildren()) do
 		table.insert(a,v.Name)
 	end
@@ -590,15 +590,15 @@ Sniper:OnChanged(function(bool)
 	task.spawn(function()
 		while _G.Buyer and task.wait() do
 			if game.PlaceId == 123662243100680 then
-				
+
 				repeat task.wait()
 					if workspace.LobbyMenuZones.Merchant.Position ~= Character.HumanoidRootPart.Position then
 						workspace.LobbyMenuZones.Merchant.Position = Character.HumanoidRootPart.Position
 					end
 				until playerGui.Merchant.Enabled == true
-				
+
 				interact(playerGui.Merchant.Main.ShopWindow.Exit)
-				
+
 				repeat task.wait()
 					local found = false
 					for i, v in pairs(playerGui.Merchant.Main.ShopWindow.Content.Bin:GetChildren()) do
@@ -608,7 +608,7 @@ Sniper:OnChanged(function(bool)
 						end
 					end
 				until not found
-				
+
 				for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Merchant.Main.ShopWindow.Content.Bin:GetChildren()) do
 					if _G.Sniper[v.Name] then
 						local args = {
@@ -1091,7 +1091,7 @@ togglePlay:OnChanged(function(play)
 	end
 end)
 
-print("aaaa")
+
 
 
 local Slider = Full_Auto_Play:AddSlider("Placement Size", {
@@ -1136,6 +1136,28 @@ local mamung = Full_Auto_Play:AddDropdown("Select Slot", {
 })
 
 
+Full_Auto_Play:AddToggle("Show Hologram", {
+	Title = "Show Hologram",
+	Default = _G.Hologram,
+	Callback = function(bool)
+		_G.Hologram = bool
+		saveSettings()
+		if _G.Hologram then
+			if game.PlaceId ~= 123662243100680 then
+				task.spawn(function()
+					while _G.Hologram and task.wait() do
+						xpcall(function()
+							workspace.CenterPart:FindFirstChild("CirclePart").Transparency = 0.5
+							repeat task.wait() until not _G.Hologram
+							workspace.CenterPart:FindFirstChild("CirclePart").Transparency = 1
+						end,print)
+					end
+				end)
+			end
+		end
+	end
+})
+
 
 local Select_Speed = Ingame:AddDropdown("Select Speed", {
 	Title = "Select Speed",
@@ -1156,7 +1178,7 @@ Ingame:AddToggle("Auto Speed Vote", {
 		_G.Speed = bool
 		saveSettings()
 		local check = false
-		
+
 		task.spawn(function()
 			while _G.Speed and task.wait() do
 				xpcall(function()
@@ -1267,7 +1289,7 @@ webhook:AddToggle("Auto Send Webhook", {
 		_G.Send = bool
 		saveSettings()
 		local data = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Bottom.Currency
-		
+
 		if game.PlaceId ~= 123662243100680 then
 			playerGui.RoundSummary:GetPropertyChangedSignal("Enabled"):Connect(function()
 				if playerGui.RoundSummary.Enabled == true then

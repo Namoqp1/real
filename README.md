@@ -1091,8 +1091,8 @@ togglePlay:OnChanged(function(play)
 	end
 end)
 
+print("aaaa")
 
-print("Ee")
 
 local Slider = Full_Auto_Play:AddSlider("Placement Size", {
 	Title = "Placement Size",
@@ -1123,6 +1123,17 @@ local Sliderr = Full_Auto_Play:AddSlider("Placement Distance", {
 	end
 })
 
+local mamung = Full_Auto_Play:AddDropdown("Select Slot", {
+	Title = "Select Slot",
+	Description = "",
+	Values = {1,2,3,4,5},
+	Multi = true,
+	Default = _G.Selectslot or {},
+	Callback = function(ezs)
+		_G.Selectslot = ezs
+		saveSettings()
+	end
+})
 
 
 

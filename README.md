@@ -1092,7 +1092,7 @@ togglePlay:OnChanged(function(play)
 end)
 
 
-
+print("Ee")
 
 local Slider = Full_Auto_Play:AddSlider("Placement Size", {
 	Title = "Placement Size",
@@ -1107,6 +1107,23 @@ local Slider = Full_Auto_Play:AddSlider("Placement Size", {
 		gen_size()
 	end
 })
+
+
+local Sliderr = Full_Auto_Play:AddSlider("Placement Distance", {
+	Title = "Placement Distance",
+	Description = "Select Placement Distance For PlaceTower",
+	Default = _G.Distance or 0,
+	Min = 0,
+	Max = 100,
+	Rounding = 0,
+	Callback = function(Value)
+		_G.Distance = Value
+		saveSettings()
+		create_line()
+	end
+})
+
+
 
 
 local Select_Speed = Ingame:AddDropdown("Select Speed", {

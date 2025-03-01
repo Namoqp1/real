@@ -1159,6 +1159,53 @@ Full_Auto_Play:AddToggle("Show Hologram", {
 })
 
 
+Full_Auto_Play:AddToggle("Fully Auto Play", {
+	Title = "Fully Auto Play",
+	Default = _G.autoplay,
+	Callback = function(bool)
+		_G.autoplay = bool
+		saveSettings()
+		if _G.autoplay then
+			if game.PlaceId ~= 123662243100680 then
+				task.spawn(function()
+					while _G.autoplay and task.wait() do
+						xpcall(function()
+							local enemy = workspace.Enemies:FindFirstChildOfClass("Model").RootPart.Position
+							for i, v in pairs(workspace.GeneratedParts:GetChildren()) do
+								for _,slot in pairs({1,2,3,4,5}) do
+									if _G.Selectslot[slot] then
+										if tonumber(v.Name) == tonumber(_G.Distance) then
+											workspace.CenterPart.CFrame = v.CFrame
+											for e,unit in pairs(workspace.CenterPart:GetChildren()) do
+												if unit.Name ~= "CirclePart" then
+													local args = {
+														[1] = CFrame.new(unit.Position.X, enemy.Y-0.3, unit.Position.Z),
+														[2] = slot
+													}
+
+													game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.7.0"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("TowerService"):WaitForChild("RF"):WaitForChild("PlaceTower"):InvokeServer(unpack(args))
+												end
+											end
+										end
+									end
+								end
+							end
+
+							for _,unit in pairs(workspace.Friendlies:GetChildren()) do
+								local args = {
+									[1] = unit:GetAttribute("Id")
+								}
+
+								game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.7.0"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("GameService"):WaitForChild("RF"):WaitForChild("UpgradeTower"):InvokeServer(unpack(args))
+							end
+						end,print)
+					end
+				end)
+			end
+		end
+	end
+})
+
 local Select_Speed = Ingame:AddDropdown("Select Speed", {
 	Title = "Select Speed",
 	Values = {1 ,2 ,3 ,5},
